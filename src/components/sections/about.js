@@ -18,6 +18,7 @@ const StyledAboutSection = styled.section`
     }
   }
 `;
+
 const StyledText = styled.div`
   ul.skills-list {
     display: grid;
@@ -46,6 +47,7 @@ const StyledText = styled.div`
     }
   }
 `;
+
 const StyledPic = styled.div`
   position: relative;
   max-width: 300px;
@@ -125,7 +127,20 @@ const About = () => {
     sr.reveal(revealContainer.current, srConfig());
   }, []);
 
-  const skills = ['JavaScript (ES6+)', 'TypeScript', 'React', 'Eleventy', 'Node.js', 'WordPress'];
+  const skills = [
+    'Python',
+    'Machine Learning',
+    'AWS Cloud',
+    'JavaScript (ES6+)',
+    'React',
+    'Node.js',
+    'SQL & NoSQL',
+    'Docker',
+    'Data Pipelines',
+    'TensorFlow/PyTorch',
+    'REST APIs',
+    'Linux',
+  ];
 
   return (
     <StyledAboutSection id="about" ref={revealContainer}>
@@ -135,33 +150,36 @@ const About = () => {
         <StyledText>
           <div>
             <p>
-              Hello! My name is Brittany and I enjoy creating things that live on the internet. My
-              interest in web development started back in 2012 when I decided to try editing custom
-              Tumblr themes — turns out hacking together a custom reblog button taught me a lot
-              about HTML &amp; CSS!
+              Hello! My name is Sammy and I'm passionate about the convergence of machine learning
+              and backend technologies. My journey in tech started with IT support at Kenya Law
+              Courts, where troubleshooting complex systems sparked my fascination with how
+              technology can solve real-world problems.
             </p>
 
             <p>
-              Fast-forward to today, and I’ve had the privilege of working at{' '}
-              <a href="https://us.mullenlowe.com/">an advertising agency</a>,{' '}
-              <a href="https://starry.com/">a start-up</a>,{' '}
-              <a href="https://www.apple.com/">a huge corporation</a>, and{' '}
-              <a href="https://scout.camd.northeastern.edu/">a student-led design studio</a>. My
-              main focus these days is building accessible, inclusive products and digital
-              experiences at <a href="https://upstatement.com/">Upstatement</a> for a variety of
-              clients.
-            </p>
-
-            <p>
-              I also recently{' '}
-              <a href="https://www.newline.co/courses/build-a-spotify-connected-app">
-                launched a course
+              Fast-forward to today, and I've had the privilege of working as an{' '}
+              <a href="https://kenyalaw.org/">IT Technician</a>, a{' '}
+              <a href="https://datascienceltd.com/" target="_blank" rel="noreferrer">
+                Data Collector
               </a>{' '}
-              that covers everything you need to build a web app with the Spotify API using Node
-              &amp; React.
+              at DataScience Ltd, and a{' '}
+              <a href="https://ramanatech.com/" target="_blank" rel="noreferrer">
+                Machine Learning Engineer
+              </a>{' '}
+              at Ramana Tech School where I collaborated with a 5-member team to develop a versatile
+              recommendation system. Currently, I'm focused on designing and deploying cutting-edge
+              ML models and scalable backend services at{' '}
+              <a href="https://digitalqatalyst.com/">DigitalQatalyst</a>.
             </p>
 
-            <p>Here are a few technologies I’ve been working with recently:</p>
+            <p>
+              My expertise spans the entire MLOps lifecycle — from data engineering and model
+              development to deployment and monitoring in production environments. I'm particularly
+              passionate about building scalable data pipelines and creating ML solutions that drive
+              measurable business outcomes.
+            </p>
+
+            <p>Here are some technologies I've been working with recently:</p>
           </div>
 
           <ul className="skills-list">
@@ -177,7 +195,7 @@ const About = () => {
               width={500}
               quality={95}
               formats={['AUTO', 'WEBP', 'AVIF']}
-              alt="Headshot"
+              alt="Sammy Moruri Headshot"
             />
           </div>
         </StyledPic>
