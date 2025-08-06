@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { StaticImage } from 'gatsby-plugin-image';
 import styled from 'styled-components';
+import anime from 'animejs/lib/anime.es.js';
 import { srConfig } from '@config';
 import sr from '@utils/sr';
 import { usePrefersReducedMotion } from '@hooks';
@@ -35,6 +36,9 @@ const StyledText = styled.div`
       padding-left: 20px;
       font-family: var(--font-mono);
       font-size: var(--fz-xs);
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: all 0.3s ease;
 
       &:before {
         content: '▹';
@@ -43,6 +47,22 @@ const StyledText = styled.div`
         color: var(--green);
         font-size: var(--fz-sm);
         line-height: 12px;
+        transition: all 0.3s ease;
+      }
+
+      &:hover {
+        color: var(--green);
+        transform: translateX(5px);
+
+        &:before {
+          color: var(--white);
+          transform: scale(1.2);
+        }
+      }
+
+      &.animate-in {
+        opacity: 1;
+        transform: translateX(0);
       }
     }
   }
@@ -64,6 +84,7 @@ const StyledPic = styled.div`
     width: 100%;
     border-radius: var(--border-radius);
     background-color: var(--green);
+    transition: all 0.3s ease;
 
     &:hover,
     &:focus {
@@ -113,11 +134,96 @@ const StyledPic = styled.div`
       z-index: -1;
     }
   }
+
+  /* Add floating effect around image */
+  .tech-orbit {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    pointer-events: none;
+
+    .orbit-item {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--navy);
+      border: 1px solid var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: var(--green);
+      opacity: 0;
+    }
+  }
 `;
 
 const About = () => {
   const revealContainer = useRef(null);
+  const skillsRef = useRef(null);
+  const imageRef = useRef(null);
   const prefersReducedMotion = usePrefersReducedMotion();
+
+  // Move functions to top level to avoid no-use-before-define
+  const animateSkills = () => {
+    const skillItems = document.querySelectorAll('.skills-list li');
+
+    anime({
+      targets: skillItems,
+      translateX: [0, 0],
+      opacity: [0, 1],
+      delay: anime.stagger(100),
+      duration: 600,
+      easing: 'easeOutQuart',
+      complete: () => {
+        skillItems.forEach(item => item.classList.add('animate-in'));
+      },
+    });
+  };
+
+  const animateImageOrbit = () => {
+    // Create orbiting tech icons around profile image
+    const techIcons = ['💻', '🐍', '☁️', '⚡', '🔧', '📊'];
+    const orbitContainer = document.querySelector('.tech-orbit');
+
+    if (orbitContainer && !orbitContainer.hasChildNodes()) {
+      techIcons.forEach((icon, index) => {
+        const item = document.createElement('div');
+        item.className = 'orbit-item';
+        item.textContent = icon;
+
+        const angle = (360 / techIcons.length) * index;
+        const radius = 140;
+        const x = Math.cos((angle * Math.PI) / 180) * radius;
+        const y = Math.sin((angle * Math.PI) / 180) * radius;
+
+        item.style.transform = `translate(${x}px, ${y}px)`;
+        orbitContainer.appendChild(item);
+      });
+
+      // Animate orbit items appearing
+      anime({
+        targets: '.orbit-item',
+        scale: [0, 1],
+        opacity: [0, 0.6],
+        delay: anime.stagger(200, { start: 500 }),
+        duration: 800,
+        easing: 'easeOutElastic(1, .8)',
+      });
+
+      // Continuous rotation
+      anime({
+        targets: '.tech-orbit',
+        rotate: 360,
+        duration: 20000,
+        loop: true,
+        easing: 'linear',
+      });
+    }
+  };
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -125,6 +231,25 @@ const About = () => {
     }
 
     sr.reveal(revealContainer.current, srConfig());
+
+    // Animate skills when they come into view
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateSkills();
+            animateImageOrbit();
+          }
+        });
+      },
+      { threshold: 0.3 },
+    );
+
+    if (skillsRef.current) {
+      observer.observe(skillsRef.current);
+    }
+
+    return () => observer.disconnect();
   }, []);
 
   const skills = [
@@ -158,8 +283,11 @@ const About = () => {
 
             <p>
               Fast-forward to today, and I've had the privilege of working as an{' '}
-              <a href="https://kenyalaw.org/">IT Technician</a>, a{' '}
-              <a href="https://datascienceltd.com/" target="_blank" rel="noreferrer">
+              <a href="https://kenyalaw.org/" target="_blank" rel="noreferrer">
+                IT Technician
+              </a>
+              , a{' '}
+              <a href="https://datascience.co.ke/" target="_blank" rel="noreferrer">
                 Data Collector
               </a>{' '}
               at DataScience Ltd, and a{' '}
@@ -169,7 +297,10 @@ const About = () => {
               at Ramana Tech School where I collaborated with a 5-member team to develop a versatile
               recommendation system. Currently, I'm focused on designing and deploying cutting-edge
               ML models and scalable backend services at{' '}
-              <a href="https://digitalqatalyst.com/">DigitalQatalyst</a>.
+              <a href="https://digitalqatalyst.com/" target="_blank" rel="noreferrer">
+                DigitalQatalyst
+              </a>
+              .
             </p>
 
             <p>
@@ -182,12 +313,13 @@ const About = () => {
             <p>Here are some technologies I've been working with recently:</p>
           </div>
 
-          <ul className="skills-list">
+          <ul className="skills-list" ref={skillsRef}>
             {skills && skills.map((skill, i) => <li key={i}>{skill}</li>)}
           </ul>
         </StyledText>
 
-        <StyledPic>
+        <StyledPic ref={imageRef}>
+          <div className="tech-orbit"></div>
           <div className="wrapper">
             <StaticImage
               className="img"
