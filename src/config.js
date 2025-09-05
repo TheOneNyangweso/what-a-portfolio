@@ -1,24 +1,31 @@
 module.exports = {
+  // Primary email for main contact button
   email: 'morurisammy5@gmail.com',
+
+  // Secondary email for alternative contact
+  secondaryEmail: 'dev.sammy.n.m@gmail.com',
 
   socialMedia: [
     {
       name: 'GitHub',
-      url: 'https://github.com/sammymoruri', // Update with your actual GitHub username
+      url: 'https://github.com/TheOneNyangweso',
     },
     {
       name: 'Linkedin',
       url: 'https://www.linkedin.com/in/sammymoruri-483364247',
     },
     {
-      name: 'Twitter',
-      url: 'https://twitter.com/sammymoruri', // Update if you have Twitter
+      name: 'X', // Changed from Twitter to X
+      url: 'https://x.com/dev_s_n_m',
     },
-    // Add more platforms if needed:
-    // {
-    //   name: 'Instagram',
-    //   url: 'https://www.instagram.com/sammymoruri',
-    // },
+    {
+      name: 'EmailPrimary',
+      url: 'mailto:morurisammy5@gmail.com',
+    },
+    {
+      name: 'EmailSecondary',
+      url: 'mailto:dev.sammy.n.m@gmail.com',
+    },
   ],
 
   navLinks: [
@@ -31,7 +38,7 @@ module.exports = {
       url: '/#jobs',
     },
     {
-      name: 'Projects', // Changed from 'Work' to 'Projects'
+      name: 'Projects',
       url: '/#projects',
     },
     {
@@ -41,9 +48,9 @@ module.exports = {
   ],
 
   colors: {
-    green: '#64ffda', // Keep Brittany's signature cyan - works great for tech
-    navy: '#0a192f', // Perfect professional navy
-    darkNavy: '#020c1b', // Deep dark navy for backgrounds
+    green: '#64ffda',
+    navy: '#0a192f',
+    darkNavy: '#020c1b',
   },
 
   // Enhanced animation config - we'll use this for our Anime.js integration
@@ -63,7 +70,7 @@ module.exports = {
     viewOffset: { top: 0, right: 0, bottom: 0, left: 0 },
   }),
 
-  // Custom config for your MLOps animations (we'll use this later)
+  // Custom config for MLOps animations (we'll use this later)
   animeConfig: {
     // Stagger timing for technical skills
     skillsStagger: 100,
