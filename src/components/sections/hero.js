@@ -230,7 +230,14 @@ const Hero = () => {
     </>
   );
   const five = (
-    <a className="email-link" href="mailto:morurisammy5@gmail.com" rel="noreferrer">
+    <a
+      className="email-link"
+      href="#contact"
+      onClick={e => {
+        e.preventDefault();
+        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+      }}
+      rel="noreferrer">
       Get In Touch
     </a>
   );
