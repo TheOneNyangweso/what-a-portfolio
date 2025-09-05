@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { srConfig, email } from '@config';
+import { srConfig, email, secondaryEmail } from '@config';
 import sr from '@utils/sr';
 import { usePrefersReducedMotion } from '@hooks';
 
@@ -35,9 +35,29 @@ const StyledContactSection = styled.section`
     font-size: clamp(40px, 5vw, 60px);
   }
 
+  .email-links {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 50px;
+
+    @media (max-width: 480px) {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
   .email-link {
     ${({ theme }) => theme.mixins.bigButton};
-    margin-top: 50px;
+
+    &.secondary {
+      background-color: transparent;
+      border: 1px solid var(--green);
+
+      &:hover {
+        background-color: var(--green-tint);
+      }
+    }
   }
 `;
 
@@ -55,18 +75,24 @@ const Contact = () => {
 
   return (
     <StyledContactSection id="contact" ref={revealContainer}>
-      <h2 className="numbered-heading overline">What’s Next?</h2>
+      <h2 className="numbered-heading overline">What's Next?</h2>
 
       <h2 className="title">Get In Touch</h2>
 
       <p>
-        Although I’m not currently looking for any new opportunities, my inbox is always open.
-        Whether you have a question or just want to say hi, I’ll try my best to get back to you!
+        My inbox is always open! Whether you're interested in discussing new opportunities, have a
+        project in mind, want to collaborate on something exciting, or just want to connect and chat
+        about tech, I'd love to hear from you. I'll do my best to get back to you quickly.
       </p>
 
-      <a className="email-link" href={`mailto:${email}`}>
-        Say Hello
-      </a>
+      <div className="email-links">
+        <a className="email-link" href={`mailto:${email}`}>
+          Say Hello
+        </a>
+        <a className="email-link secondary" href={`mailto:${secondaryEmail}`}>
+          Dev Email
+        </a>
+      </div>
     </StyledContactSection>
   );
 };
