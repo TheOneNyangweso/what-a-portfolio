@@ -246,6 +246,7 @@ const Jobs = () => {
     <StyledJobsSection id="jobs" ref={revealContainer}>
       <h2 className="numbered-heading">Where I’ve Worked</h2>
 
+      {/* BUG: Name of ompanies overlap in mobile views */}
       <div className="inner">
         <StyledTabList role="tablist" aria-label="Job tabs" onKeyDown={e => onKeyDown(e)}>
           {jobsData &&
